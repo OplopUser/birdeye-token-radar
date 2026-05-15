@@ -7,9 +7,12 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
   },
-  resolve: {
+ resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
+  },
+  server: {
+    depsFromNodeModules: true,
   },
 })

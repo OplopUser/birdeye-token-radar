@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/.playwright-browsers/
 
 # next.js
 /.next/
@@ -30,9 +33,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (never commit real keys)
 .env*
-!
+!.env.example
 
 # API call logs (local evidence, not committed)
 data/

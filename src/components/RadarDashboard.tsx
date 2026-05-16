@@ -20,7 +20,8 @@ export function RadarDashboard({ initialData }: Props) {
   const [data, setData] = useState<RadarData>(initialData)
   const [minScore, setMinScore] = useState(0)
   const [hideWarnings, setHideWarnings] = useState(false)
-  const [search, setSearch] = useState("")
+  const [searchDraft, setSearchDraft] = useState("")
+  const [executedSearch, setExecutedSearch] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -39,11 +40,16 @@ export function RadarDashboard({ initialData }: Props) {
     }
   }
 
+  const executeSearch = async () => {
+    setExecutedSearch(searchDraft.trim())
+    await refresh()
+  }
+
   const filtered = data.items.filter((item) => {
     if (item.score.total < minScore) return false
     if (hideWarnings && item.score.warnings.length > 0) return false
-    if (search) {
-      const s = search.toLowerCase()
+    if (executedSearch) {
+      const s = executedSearch.toLowerCase()
       return (
         item.token.symbol?.toLowerCase().includes(s) ||
         item.token.address.toLowerCase().includes(s) ||
@@ -159,17 +165,39 @@ export function RadarDashboard({ initialData }: Props) {
         <aside className="birdeye-panel h-fit rounded-[2.25rem] p-5 lg:sticky lg:top-5">
           <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Controls</p>
           <div className="mt-5 space-y-5">
-            <label className="block">
-              <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">search</span>
-              <input
-                id="search"
-                type="text"
-                placeholder="symbol / address"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full border-0 border-b border-[#82f8fd]/20 bg-transparent px-0 py-3 font-mono text-sm text-white outline-none placeholder:text-[#939eae]/55 focus:border-[#00c98b]"
-              />
-            </label>
+            <form
+              className="block"
+              onSubmit={(event) => {
+                event.preventDefault()
+                void executeSearch()
+              }}
+            >
+              <label htmlFor="search">
+                <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">search</span>
+              </label>
+              <div className="flex gap-2">
+                <input
+                  id="search"
+                  type="text"
+                  placeholder="symbol / address"
+                  value={searchDraft}
+                  onChange={(e) => setSearchDraft(e.target.value)}
+                  className="min-w-0 flex-1 border-0 border-b border-[#82f8fd]/20 bg-transparent px-0 py-3 font-mono text-sm text-white outline-none placeholder:text-[#939eae]/55 focus:border-[#00c98b]"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="rounded-full border border-[#00c98b]/40 bg-[#00c98b]/12 px-4 py-2 font-mono text-[11px] font-black uppercase tracking-[0.16em] text-[#82f8fd] transition hover:bg-[#00c98b]/24 disabled:opacity-50"
+                >
+                  {loading ? "run" : "search"}
+                </button>
+              </div>
+              {executedSearch && (
+                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#59d4a4]">
+                  active query: {executedSearch}
+                </p>
+              )}
+            </form>
             <label className="block">
               <span className="mb-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">
                 minimum score <b className="text-[#82f8fd]">{minScore}</b>

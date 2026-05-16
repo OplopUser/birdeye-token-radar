@@ -72,15 +72,14 @@ export function RadarDashboard({ initialData }: Props) {
             <div className="relative grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem] xl:items-end">
               <div>
                 <div className="mb-5 flex flex-wrap items-center gap-3">
-                  <span className="rounded-full border border-[#00c98b]/30 bg-[#00c98b]/10 px-3 py-1 font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#82f8fd]">BIP Sprint 4</span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#939eae]">not a portfolio · a triage instrument</span>
+                  <span className="rounded-full border border-[#00c98b]/30 bg-[#00c98b]/10 px-3 py-1 font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#82f8fd]">Birdeye Data API</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#939eae]">Solana market scanner</span>
                 </div>
                 <h1 className="max-w-4xl text-5xl font-black uppercase leading-[0.85] tracking-[-0.08em] text-white sm:text-7xl lg:text-8xl">
-                  Birdeye Sprint Radar
+                  Birdeye Token Radar
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm leading-6 text-[#adb4c1] sm:text-base">
-                  A signal-first scanner for fresh Solana listings. The interface is built around a radar sweep,
-                  not another SaaS card wall: spot momentum, inspect risk, then refresh the Birdeye trace.
+                  Track fresh Solana token activity with Birdeye market data, liquidity signals, momentum, and token security checks.
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-2 xl:grid-cols-1">
@@ -104,8 +103,8 @@ export function RadarDashboard({ initialData }: Props) {
             <div className="birdeye-panel relative min-h-[520px] overflow-hidden rounded-[2.25rem] p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Live sweep</p>
-                  <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-white">Market radar</h2>
+                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Live market data</p>
+                  <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-white">Token radar</h2>
                 </div>
                 <button
                   onClick={refresh}
@@ -117,7 +116,7 @@ export function RadarDashboard({ initialData }: Props) {
               </div>
 
               <div className="radar-disc relative mx-auto mt-8 aspect-square max-w-[440px] overflow-hidden rounded-full border border-[#82f8fd]/20 shadow-[inset_0_0_60px_rgba(0,0,0,0.45),0_0_80px_rgba(0,201,139,0.12)]">
-                <div className="radar-sweep absolute left-1/2 top-1/2 h-1/2 w-px origin-bottom bg-gradient-to-t from-[#00c98b] to-transparent shadow-[0_0_22px_#00c98b]" />
+                <div className="radar-sweep absolute inset-0 rounded-full" />
                 <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-[#82f8fd]/10" />
                 <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-[#82f8fd]/10" />
                 {orbitItems.map((item, index) => {
@@ -133,8 +132,8 @@ export function RadarDashboard({ initialData }: Props) {
                 {orbitItems.length === 0 && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center">
                     <div className="mb-5 h-4 w-4 rounded-full bg-[#00c98b] shadow-[0_0_34px_#00c98b]" />
-                    <p className="text-2xl font-black uppercase tracking-[-0.04em] text-white">Scanner idle</p>
-                    <p className="mt-2 max-w-xs text-xs leading-5 text-[#939eae]">No token signals are visible without live Birdeye data or looser filters.</p>
+                    <p className="text-2xl font-black uppercase tracking-[-0.04em] text-white">Connect Birdeye</p>
+                    <p className="mt-2 max-w-xs text-xs leading-5 text-[#939eae]">Add a Birdeye API key to load trending tokens, new listings, and security data.</p>
                   </div>
                 )}
               </div>
@@ -143,15 +142,15 @@ export function RadarDashboard({ initialData }: Props) {
             <div className="birdeye-panel rounded-[2.25rem] p-5">
               <div className="mb-4 flex items-end justify-between gap-3">
                 <div>
-                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Signal tape</p>
-                  <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-white">Token queue</h2>
+                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Markets</p>
+                  <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-white">Token list</h2>
                 </div>
                 <span className="font-mono text-xs text-[#939eae]">{filtered.length} shown</span>
               </div>
               {filtered.length === 0 ? (
                 <div className="rounded-3xl border border-dashed border-[#82f8fd]/18 bg-[#00191a]/55 p-8 text-center">
                   <p className="text-xl font-black text-white">No tokens found</p>
-                  <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-[#939eae]">Set a Birdeye API key, refresh, or lower the minimum score. Empty state stays honest — no fake tokens.</p>
+                  <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-[#939eae]">Set a Birdeye API key, refresh the feed, or lower the minimum score.</p>
                 </div>
               ) : (
                 <div>{filtered.map((item) => <TokenCard key={item.token.address} token={item.token} score={item.score} source={item.source} />)}</div>
@@ -210,14 +209,14 @@ export function RadarDashboard({ initialData }: Props) {
             </label>
             <div className="rounded-2xl bg-[#00191a]/55 p-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">trace</p>
-              <p className="mt-2 text-sm leading-6 text-[#adb4c1]">Powered by Birdeye Data API. Endpoint evidence appears when live API calls return data.</p>
+              <p className="mt-2 text-sm leading-6 text-[#adb4c1]">Uses Birdeye token, market, and security endpoints. Live endpoint history appears after API calls return data.</p>
             </div>
           </div>
         </aside>
       </div>
 
       <footer className="py-8 text-center font-mono text-xs text-[#939eae]">
-        Birdeye Data 4-Week BIP Competition Sprint 4 · Radar cockpit redesign
+        Birdeye Token Radar · Solana market data powered by Birdeye
       </footer>
     </main>
   )

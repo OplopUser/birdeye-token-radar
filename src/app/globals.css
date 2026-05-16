@@ -76,15 +76,35 @@ body::after {
 
 .radar-disc {
   background:
-    radial-gradient(circle, rgba(130,248,253,0.12) 0 1px, transparent 2px),
-    repeating-radial-gradient(circle, transparent 0 72px, rgba(130,248,253,0.14) 73px 74px),
-    conic-gradient(from 18deg, rgba(0,201,139,0.00), rgba(0,201,139,0.24), rgba(130,248,253,0.04), rgba(0,201,139,0.00) 38deg, transparent 39deg 360deg),
-    radial-gradient(circle at 50% 50%, rgba(0,201,139,0.14), rgba(0,25,26,0.72) 54%, rgba(0,8,10,0.92) 100%);
+    radial-gradient(circle, rgba(130,248,253,0.13) 0 1px, transparent 2px),
+    repeating-radial-gradient(circle, transparent 0 72px, rgba(130,248,253,0.16) 73px 74px),
+    radial-gradient(circle at 50% 50%, rgba(0,201,139,0.12), rgba(0,25,26,0.72) 54%, rgba(0,8,10,0.94) 100%);
 }
 
 .radar-sweep {
-  transform-origin: center;
-  animation: radar-sweep 8s linear infinite;
+  background: conic-gradient(
+    from -18deg at 50% 50%,
+    rgba(0, 201, 139, 0.48) 0deg,
+    rgba(130, 248, 253, 0.20) 14deg,
+    rgba(0, 201, 139, 0.06) 34deg,
+    transparent 58deg,
+    transparent 360deg
+  );
+  mix-blend-mode: screen;
+  transform-origin: 50% 50%;
+  animation: radar-sweep 7s linear infinite;
+}
+
+.radar-sweep::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 1px;
+  height: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, rgba(0,201,139,0.94), rgba(130,248,253,0.20), transparent);
+  box-shadow: 0 0 18px rgba(0,201,139,0.75);
 }
 
 .signal-pulse { animation: signal-pulse 2.6s ease-in-out infinite; }

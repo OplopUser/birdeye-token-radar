@@ -18,7 +18,7 @@ it("renders radar title and token cards", () => {
       }}
     />,
   )
-  expect(screen.getByText(/Birdeye Sprint Radar/i)).toBeInTheDocument()
+  expect(screen.getByRole("heading", { level: 1, name: /Birdeye Token Radar/i })).toBeInTheDocument()
   expect(screen.getByText(/AAA/)).toBeInTheDocument()
 })
 

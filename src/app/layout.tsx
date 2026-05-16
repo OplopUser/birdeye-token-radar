@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Birdeye Sprint Radar",
-  description: "Discover new & trending Solana tokens with transparent safety + momentum scoring. Built for Birdeye BIP Sprint 4.",
+  title: "Birdeye Token Radar",
+  description: "Track Solana token movement with Birdeye market data, security checks, and momentum scoring.",
 };
 
 export default function RootLayout({

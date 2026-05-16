@@ -59,17 +59,7 @@ export function RadarDashboard({ initialData }: Props) {
 
   return (
     <main className="relative mx-auto min-h-screen max-w-[1500px] px-4 py-5 sm:px-6 lg:px-8">
-      <div className="grid gap-5 lg:grid-cols-[5rem_minmax(0,1fr)_22rem]">
-        <aside className="birdeye-panel hidden min-h-[calc(100vh-2.5rem)] rounded-[2rem] p-3 lg:flex lg:flex-col lg:items-center lg:justify-between">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#00c98b]/30 bg-[#00c98b]/10 font-mono text-xl font-black text-[#82f8fd]">B</div>
-          <div className="flex rotate-180 flex-col items-center gap-5 [writing-mode:vertical-rl]">
-            <span className="font-mono text-[10px] uppercase tracking-[0.45em] text-[#82f8fd]">Sprint Radar</span>
-            <span className="h-16 w-px bg-[#82f8fd]/20" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#939eae]">Solana</span>
-          </div>
-          <div className="h-3 w-3 rounded-full bg-[#00c98b] shadow-[0_0_20px_#00c98b]" />
-        </aside>
-
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <section className="grid gap-5">
           <header className="relative overflow-hidden rounded-[2.25rem] border border-[#82f8fd]/15 bg-[#00191a]/78 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.38)] sm:p-7">
             <div className="absolute inset-y-0 right-0 hidden w-1/2 skew-x-[-14deg] border-l border-[#82f8fd]/10 bg-gradient-to-br from-[#00c98b]/12 via-[#03a9b0]/8 to-transparent lg:block" />

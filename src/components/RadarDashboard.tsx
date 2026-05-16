@@ -7,6 +7,15 @@ import { EndpointEvidence } from "./EndpointEvidence"
 
 type Props = { initialData: RadarData }
 
+const ORBIT_POINTS = [
+  { left: "51%", top: "18%" },
+  { left: "72%", top: "33%" },
+  { left: "62%", top: "66%" },
+  { left: "34%", top: "70%" },
+  { left: "24%", top: "38%" },
+  { left: "48%", top: "48%" },
+]
+
 export function RadarDashboard({ initialData }: Props) {
   const [data, setData] = useState<RadarData>(initialData)
   const [minScore, setMinScore] = useState(0)
@@ -45,117 +54,152 @@ export function RadarDashboard({ initialData }: Props) {
   })
 
   const highSignal = data.items.filter((item) => item.score.total >= 70).length
-  const warnings = data.items.reduce((sum, item) => sum + item.score.warnings.length, 0)
+  const warningCount = data.items.reduce((sum, item) => sum + item.score.warnings.length, 0)
+  const orbitItems = filtered.slice(0, ORBIT_POINTS.length)
 
   return (
-    <main className="relative mx-auto min-h-screen max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <header className="relative overflow-hidden rounded-[2rem] border border-[#82f8fd]/15 bg-[#00191a]/80 p-6 shadow-[0_40px_120px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8 lg:p-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(0,201,139,0.24),transparent_30%),radial-gradient(circle_at_82%_6%,rgba(5,135,212,0.26),transparent_28%),linear-gradient(135deg,rgba(1,73,76,0.86),rgba(0,25,26,0.68))]" />
-        <div className="absolute -right-24 top-0 h-72 w-72 rounded-full border border-[#82f8fd]/15 bg-[#03a9b0]/10 blur-2xl" />
-        <div className="relative grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end">
-          <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00c98b]/30 bg-[#00c98b]/10 px-4 py-2 text-xs font-black uppercase tracking-[0.28em] text-[#82f8fd]">
-              <span className="h-2 w-2 rounded-full bg-[#00c98b] shadow-[0_0_18px_#00c98b]" />
-              BIP Sprint 4 · Solana intelligence
-            </div>
-            <h1 className="max-w-4xl text-4xl font-black tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-              Birdeye Sprint Radar
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[#adb4c1] sm:text-lg">
-              A Birdeye-native token command center for new listings, trending momentum, liquidity checks,
-              and security signals — styled like a high-contrast crypto data terminal instead of a starter app.
-            </p>
+    <main className="relative mx-auto min-h-screen max-w-[1500px] px-4 py-5 sm:px-6 lg:px-8">
+      <div className="grid gap-5 lg:grid-cols-[5rem_minmax(0,1fr)_22rem]">
+        <aside className="birdeye-panel hidden min-h-[calc(100vh-2.5rem)] rounded-[2rem] p-3 lg:flex lg:flex-col lg:items-center lg:justify-between">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#00c98b]/30 bg-[#00c98b]/10 font-mono text-xl font-black text-[#82f8fd]">B</div>
+          <div className="flex rotate-180 flex-col items-center gap-5 [writing-mode:vertical-rl]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.45em] text-[#82f8fd]">Sprint Radar</span>
+            <span className="h-16 w-px bg-[#82f8fd]/20" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#939eae]">Solana</span>
           </div>
-          <div className="grid grid-cols-3 gap-3 lg:grid-cols-1">
-            <div className="rounded-2xl border border-[#82f8fd]/12 bg-[#00191a]/65 p-4">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[#939eae]">Tokens</p>
-              <p className="mt-1 font-mono text-2xl font-black text-white">{data.items.length}</p>
+          <div className="h-3 w-3 rounded-full bg-[#00c98b] shadow-[0_0_20px_#00c98b]" />
+        </aside>
+
+        <section className="grid gap-5">
+          <header className="relative overflow-hidden rounded-[2.25rem] border border-[#82f8fd]/15 bg-[#00191a]/78 p-5 shadow-[0_30px_100px_rgba(0,0,0,0.38)] sm:p-7">
+            <div className="absolute inset-y-0 right-0 hidden w-1/2 skew-x-[-14deg] border-l border-[#82f8fd]/10 bg-gradient-to-br from-[#00c98b]/12 via-[#03a9b0]/8 to-transparent lg:block" />
+            <div className="relative grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem] xl:items-end">
+              <div>
+                <div className="mb-5 flex flex-wrap items-center gap-3">
+                  <span className="rounded-full border border-[#00c98b]/30 bg-[#00c98b]/10 px-3 py-1 font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#82f8fd]">BIP Sprint 4</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#939eae]">not a portfolio · a triage instrument</span>
+                </div>
+                <h1 className="max-w-4xl text-5xl font-black uppercase leading-[0.85] tracking-[-0.08em] text-white sm:text-7xl lg:text-8xl">
+                  Birdeye Sprint Radar
+                </h1>
+                <p className="mt-5 max-w-2xl text-sm leading-6 text-[#adb4c1] sm:text-base">
+                  A signal-first scanner for fresh Solana listings. The interface is built around a radar sweep,
+                  not another SaaS card wall: spot momentum, inspect risk, then refresh the Birdeye trace.
+                </p>
+              </div>
+              <div className="grid grid-cols-3 gap-2 xl:grid-cols-1">
+                {[
+                  ["tokens", data.items.length],
+                  ["signals", highSignal],
+                  ["warnings", warningCount],
+                ].map(([label, value]) => (
+                  <div key={label} className="border-l border-[#82f8fd]/16 bg-[#00191a]/45 px-4 py-3">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#939eae]">{label}</p>
+                    <p className="mt-1 font-mono text-3xl font-black text-white">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="rounded-2xl border border-[#00c98b]/20 bg-[#00c98b]/10 p-4">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[#59d4a4]">High signal</p>
-              <p className="mt-1 font-mono text-2xl font-black text-[#82f8fd]">{highSignal}</p>
+          </header>
+
+          {error && <div className="rounded-2xl border border-[#e95f6a]/30 bg-[#e95f6a]/10 p-4 text-sm text-[#ffaa7b]" role="alert">{error}</div>}
+
+          <section className="grid gap-5 xl:grid-cols-[minmax(25rem,0.92fr)_minmax(0,1.08fr)]">
+            <div className="birdeye-panel relative min-h-[520px] overflow-hidden rounded-[2.25rem] p-5">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Live sweep</p>
+                  <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-white">Market radar</h2>
+                </div>
+                <button
+                  onClick={refresh}
+                  disabled={loading}
+                  className="rounded-full border border-[#00c98b]/35 bg-[#00c98b]/10 px-4 py-2 font-mono text-xs font-black uppercase tracking-[0.18em] text-[#82f8fd] transition hover:bg-[#00c98b]/20 disabled:opacity-50"
+                >
+                  {loading ? "sweeping" : "refresh"}
+                </button>
+              </div>
+
+              <div className="radar-disc relative mx-auto mt-8 aspect-square max-w-[440px] overflow-hidden rounded-full border border-[#82f8fd]/20 shadow-[inset_0_0_60px_rgba(0,0,0,0.45),0_0_80px_rgba(0,201,139,0.12)]">
+                <div className="radar-sweep absolute left-1/2 top-1/2 h-1/2 w-px origin-bottom bg-gradient-to-t from-[#00c98b] to-transparent shadow-[0_0_22px_#00c98b]" />
+                <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-[#82f8fd]/10" />
+                <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-[#82f8fd]/10" />
+                {orbitItems.map((item, index) => {
+                  const point = ORBIT_POINTS[index]
+                  return (
+                    <div key={item.token.address} className="signal-pulse absolute -translate-x-1/2 -translate-y-1/2" style={point}>
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#00c98b]/40 bg-[#00191a]/85 text-center shadow-[0_0_26px_rgba(0,201,139,0.25)]">
+                        <span className="font-mono text-[10px] font-black text-[#82f8fd]">{item.score.total}</span>
+                      </div>
+                    </div>
+                  )
+                })}
+                {orbitItems.length === 0 && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center">
+                    <div className="mb-5 h-4 w-4 rounded-full bg-[#00c98b] shadow-[0_0_34px_#00c98b]" />
+                    <p className="text-2xl font-black uppercase tracking-[-0.04em] text-white">Scanner idle</p>
+                    <p className="mt-2 max-w-xs text-xs leading-5 text-[#939eae]">No token signals are visible without live Birdeye data or looser filters.</p>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="rounded-2xl border border-[#f7c543]/20 bg-[#f7c543]/10 p-4">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[#ffd885]">Warnings</p>
-              <p className="mt-1 font-mono text-2xl font-black text-[#ffd885]">{warnings}</p>
+
+            <div className="birdeye-panel rounded-[2.25rem] p-5">
+              <div className="mb-4 flex items-end justify-between gap-3">
+                <div>
+                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Signal tape</p>
+                  <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-white">Token queue</h2>
+                </div>
+                <span className="font-mono text-xs text-[#939eae]">{filtered.length} shown</span>
+              </div>
+              {filtered.length === 0 ? (
+                <div className="rounded-3xl border border-dashed border-[#82f8fd]/18 bg-[#00191a]/55 p-8 text-center">
+                  <p className="text-xl font-black text-white">No tokens found</p>
+                  <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-[#939eae]">Set a Birdeye API key, refresh, or lower the minimum score. Empty state stays honest — no fake tokens.</p>
+                </div>
+              ) : (
+                <div>{filtered.map((item) => <TokenCard key={item.token.address} token={item.token} score={item.score} source={item.source} />)}</div>
+              )}
+            </div>
+          </section>
+
+          {data.endpointsUsed.length > 0 && <EndpointEvidence endpoints={data.endpointsUsed} generatedAt={data.generatedAt} />}
+        </section>
+
+        <aside className="birdeye-panel h-fit rounded-[2.25rem] p-5 lg:sticky lg:top-5">
+          <p className="font-mono text-[10px] font-black uppercase tracking-[0.28em] text-[#00c98b]">Controls</p>
+          <div className="mt-5 space-y-5">
+            <label className="block">
+              <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">search</span>
+              <input
+                id="search"
+                type="text"
+                placeholder="symbol / address"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full border-0 border-b border-[#82f8fd]/20 bg-transparent px-0 py-3 font-mono text-sm text-white outline-none placeholder:text-[#939eae]/55 focus:border-[#00c98b]"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">
+                minimum score <b className="text-[#82f8fd]">{minScore}</b>
+              </span>
+              <input id="minScore" type="range" min={0} max={100} value={minScore} onChange={(e) => setMinScore(Number(e.target.value))} className="w-full accent-[#00c98b]" />
+            </label>
+            <label className="flex items-center justify-between gap-4 border-y border-[#82f8fd]/12 py-4 text-sm text-[#adb4c1]">
+              <span>Hide warnings</span>
+              <input className="h-5 w-5 accent-[#00c98b]" type="checkbox" checked={hideWarnings} onChange={(e) => setHideWarnings(e.target.checked)} />
+            </label>
+            <div className="rounded-2xl bg-[#00191a]/55 p-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#939eae]">trace</p>
+              <p className="mt-2 text-sm leading-6 text-[#adb4c1]">Powered by Birdeye Data API. Endpoint evidence appears when live API calls return data.</p>
             </div>
           </div>
-        </div>
-      </header>
+        </aside>
+      </div>
 
-      {error && (
-        <div className="mt-5 rounded-2xl border border-[#e95f6a]/30 bg-[#e95f6a]/10 p-4 text-sm text-[#ffaa7b]" role="alert">
-          {error}
-        </div>
-      )}
-
-      <section className="birdeye-card sticky top-3 z-10 mt-5 rounded-3xl p-4">
-        <div className="grid gap-4 lg:grid-cols-[1fr_15rem_11rem_auto] lg:items-center">
-          <label className="relative block">
-            <span className="mb-2 block text-[10px] font-black uppercase tracking-[0.24em] text-[#939eae]">Search market</span>
-            <input
-              id="search"
-              type="text"
-              placeholder="Symbol, name, or address"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-2xl border border-[#82f8fd]/15 bg-[#00191a]/80 px-4 py-3 font-mono text-sm text-white outline-none transition placeholder:text-[#939eae]/55 focus:border-[#00c98b] focus:shadow-[0_0_0_3px_rgba(0,201,139,0.14)]"
-            />
-          </label>
-          <label className="block">
-            <span className="mb-2 flex justify-between text-[10px] font-black uppercase tracking-[0.24em] text-[#939eae]">
-              Min score <b className="font-mono text-[#82f8fd]">{minScore}</b>
-            </span>
-            <input
-              id="minScore"
-              type="range"
-              min={0}
-              max={100}
-              value={minScore}
-              onChange={(e) => setMinScore(Number(e.target.value))}
-              className="w-full accent-[#00c98b]"
-            />
-          </label>
-          <label className="flex h-full items-end gap-3 rounded-2xl border border-[#82f8fd]/12 bg-[#00191a]/55 px-4 py-3 text-sm text-[#adb4c1]">
-            <input className="h-4 w-4 accent-[#00c98b]" type="checkbox" checked={hideWarnings} onChange={(e) => setHideWarnings(e.target.checked)} />
-            Hide warnings
-          </label>
-          <button
-            onClick={refresh}
-            disabled={loading}
-            className="rounded-2xl bg-gradient-to-r from-[#00c98b] to-[#03a9b0] px-6 py-3 text-sm font-black uppercase tracking-[0.16em] text-[#00191a] shadow-[0_18px_48px_rgba(0,201,139,0.22)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? "Refreshing" : "Refresh"}
-          </button>
-        </div>
-      </section>
-
-      <section className="mt-6">
-        {filtered.length === 0 ? (
-          <div className="birdeye-card rounded-[2rem] p-10 text-center">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-[#82f8fd]/15 bg-[#00c98b]/10 text-2xl">◉</div>
-            <p className="text-2xl font-black text-white">No tokens found</p>
-            <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#939eae]">
-              Add a Birdeye API key for live data, refresh the radar, or lower the score threshold. The interface is ready for live token intelligence.
-            </p>
-          </div>
-        ) : (
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {filtered.map((item) => (
-              <TokenCard key={item.token.address} token={item.token} score={item.score} source={item.source} />
-            ))}
-          </div>
-        )}
-      </section>
-
-      {data.endpointsUsed.length > 0 && (
-        <div className="mt-6">
-          <EndpointEvidence endpoints={data.endpointsUsed} generatedAt={data.generatedAt} />
-        </div>
-      )}
-
-      <footer className="py-10 text-center font-mono text-xs text-[#939eae]">
-        Built for Birdeye Data 4-Week BIP Competition Sprint 4 · Powered by Birdeye API
+      <footer className="py-8 text-center font-mono text-xs text-[#939eae]">
+        Birdeye Data 4-Week BIP Competition Sprint 4 · Radar cockpit redesign
       </footer>
     </main>
   )

@@ -1,10 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-sans-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Menlo, Consolas, monospace;
+  --background: #00191a;
+  --foreground: #f7fbfb;
+  --birdeye-ink: #00191a;
+  --birdeye-panel: rgba(1, 73, 76, 0.72);
+  --birdeye-panel-strong: rgba(3, 72, 112, 0.62);
+  --birdeye-line: rgba(130, 248, 253, 0.16);
+  --birdeye-mint: #00c98b;
+  --birdeye-mint-2: #12ca93;
+  --birdeye-cyan: #03a9b0;
+  --birdeye-blue: #0587d4;
+  --birdeye-yellow: #f7c543;
+  --birdeye-red: #e95f6a;
+  --birdeye-muted: #939eae;
+  --font-sans-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono-family: "IBM Plex Mono", "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
 }
 
 @theme inline {
@@ -14,15 +25,50 @@
   --font-mono: var(--font-mono-family);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #00191a;
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(0, 201, 139, 0.18), transparent 28rem),
+    radial-gradient(circle at 84% 6%, rgba(5, 135, 212, 0.18), transparent 26rem),
+    linear-gradient(180deg, #00191a 0%, #011315 46%, #02080a 100%);
   color: var(--foreground);
   font-family: var(--font-sans-family);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(130, 248, 253, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(130, 248, 253, 0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 76%);
+}
+
+::selection {
+  background: rgba(0, 201, 139, 0.35);
+  color: #ffffff;
+}
+
+.birdeye-card {
+  border: 1px solid var(--birdeye-line);
+  background: linear-gradient(180deg, rgba(1, 73, 76, 0.70), rgba(0, 25, 26, 0.82));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+}
+
+.birdeye-chip {
+  border: 1px solid rgba(130, 248, 253, 0.18);
+  background: rgba(0, 25, 26, 0.65);
 }

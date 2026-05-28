@@ -87,7 +87,7 @@ export default function SubmissionPage() {
             </div>
             <div className="rounded-2xl border border-[#82f8fd]/12 bg-[#00191a]/65 p-4">
               <p className="text-[10px] uppercase tracking-[0.22em] text-[#939eae]">Live app</p>
-              <p className="mt-2 italic text-[#adb4c1]">[add deployment URL]</p>
+              <p className="mt-2 italic text-[#adb4c1]"><a href="https://birdeye-data-4-week-bip-competition.vercel.app" target="_blank" rel="noopener noreferrer" className="underline decoration-[#00c98b]/50 underline-offset-4 hover:text-[#82f8fd]">birdeye-data-4-week-bip-competition.vercel.app</a></p>
             </div>
           </div>
         </Panel>

@@ -83,7 +83,7 @@ export default function SubmissionPage() {
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-2xl border border-[#82f8fd]/12 bg-[#00191a]/65 p-4">
               <p className="text-[10px] uppercase tracking-[0.22em] text-[#939eae]">GitHub repo</p>
-              <p className="mt-2 italic text-[#adb4c1]">[add repo URL]</p>
+              <p className="mt-2 italic text-[#adb4c1]"><a href="https://github.com/OplopUser/birdeye-token-radar" target="_blank" rel="noopener noreferrer" className="underline decoration-[#00c98b]/50 underline-offset-4 hover:text-[#82f8fd]">github.com/OplopUser/birdeye-token-radar</a></p>
             </div>
             <div className="rounded-2xl border border-[#82f8fd]/12 bg-[#00191a]/65 p-4">
               <p className="text-[10px] uppercase tracking-[0.22em] text-[#939eae]">Live app</p>
